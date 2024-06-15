@@ -154,18 +154,24 @@
 
                 //dragging concept
 
+                //The dragstart event is fired when the user starts dragging an element or text selection. 
+                //This event is cancelable and may bubble up to the Document and Window objects.
                 listItem.addEventListener("dragstart", function () {
                     listItem.classList.add("dragging");
                 })
 
+                //The dragend event is fired when a drag operation ends (by releasing a mouse button or hitting the escape key)
+                
                 listItem.addEventListener("dragend", function () {
                     listItem.classList.remove("dragging");
                 })
 
+                //The dragover event is fired when an element or text selection is being dragged over a valid drop target 
                 listItem.addEventListener("dragover", function (e) {
                     e.preventDefault();
                 })
 
+                //The DragEnter event is raised when the user first drags the mouse cursor over the control during a drag-and-drop operation.
                 listItem.addEventListener("dragenter", function (e) {
                     e.preventDefault();
                     let draggingItem = document.querySelector(".dragging");
