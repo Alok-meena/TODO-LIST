@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,20 +7,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BASIC TODO LIST</title>
-
-<style>
+    <style>
         body {
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            background-color: blue;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            background-image: url(hello.jpg);
         }
 
         .todo-container {
-            background-color: #ffffff;
+            background-color:aqua;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -46,7 +48,7 @@
             width: calc(50% - 10px);
             padding: 10px;
             margin: 5px;
-            background-color: #007bff;
+            background-color:#dc3545;
             color: #ffffff;
             border: none;
             border-radius: 4px;
@@ -56,7 +58,7 @@
         }
 
         .todo-container button:hover {
-            background-color: #0056b3;
+            background-color:chartreuse;
         }
 
         .todo-list {
@@ -83,29 +85,22 @@
             opacity: 0.5;
         }
 
-        .todo-text {
-            flex-grow: 1;
-            margin-right: 10px;
-        }
-
-        .edit-button {
-            background-color: #ffc107;
-            color: #ffffff;
-        }
-
-        .edit-button:hover {
-            background-color: #e0a800;
-        }
-
-        .delete-button {
+        .todo-item button {
+            margin-left: 10px;
             background-color: #dc3545;
-            color: #ffffff;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .delete-button:hover {
+        .todo-item button:hover {
             background-color: #c82333;
         }
-    </style></head>
+    </style>
+</head>
 
 <body>
     <div class="todo-container">
@@ -116,22 +111,24 @@
             <button id="deleteAllButton">Delete All</button>
         </div>
         <ul id="todoList" class="todo-list"></ul>
+
     </div>
 
-
-<script>
+    <script>
         function addTodoItem() {
             let todoInput = document.getElementById("todoInput");
             let todoList = document.getElementById("todoList");
 
+            //now we are checking if the input is not empty and something is given to the input then do this or not we used trim jo left and right ke whitespaces ko hta ke check krega
             if (todoInput.value.trim() !== "") {
                 let listItem = document.createElement("li");
-                listItem.className = "todo-item";
-                listItem.draggable = true;
-
+                listItem.className = "todo-item";//method to add classname or can use setAttribute()
+                listItem.draggable = true;//it is an attribute true kiya to ab ham use drag kr skte hai mtlb uspe click krke use khi bhi le ja sskte ho
+                //here you can also use innerText in place of textContent
                 let todoText = document.createElement("span");
                 todoText.className = "todo-text";
                 todoText.textContent = todoInput.value;
+
 
                 let editButton = document.createElement("button");
                 editButton.textContent = "Edit";
@@ -139,7 +136,7 @@
                 editButton.addEventListener('click', function () {
                     if (editButton.textContent === "Edit") {
                         todoText.contentEditable = true;
-                        todoText.focus();
+                        todoText.focus();//method gives focus to an element 
                         editButton.textContent = "Save";
                     } else {
                         todoText.contentEditable = false;
@@ -147,56 +144,61 @@
                     }
                 });
 
+
                 let deleteButton = document.createElement("button");
                 deleteButton.textContent = "Delete";
-                deleteButton.className = "delete-button";
                 deleteButton.addEventListener('click', function () {
-                    listItem.remove();
-                });
+                    listItem.remove();//we can use listItem.innerHTML="" this also but it will not remove that completely
+                })
 
                 listItem.appendChild(todoText);
                 listItem.appendChild(editButton);
-                listItem.appendChild(deleteButton);
-                todoList.appendChild(listItem);
+                listItem.appendChild(deleteButton);//delete button ko listItem ke sath hi append karna hai 
+                todoList.appendChild(listItem);//inserting value to ul
 
                 listItem.addEventListener("dragstart", function () {
                     listItem.classList.add("dragging");
-                });
+                })
 
                 listItem.addEventListener("dragend", function () {
                     listItem.classList.remove("dragging");
-                });
+                })
 
                 listItem.addEventListener("dragover", function (e) {
                     e.preventDefault();
-                });
+                })
 
                 listItem.addEventListener("dragenter", function (e) {
                     e.preventDefault();
                     let draggingItem = document.querySelector(".dragging");
-                    if (draggingItem !== listItem) {
-                        todoList.insertBefore(draggingItem, listItem);
+                    if (draggingItem !== listItem) {//dragging item is not equal to curent item then do this
+                        todoList.insertBefore(draggingItem, listItem);//listItem.sibling hta diya bs
                     }
-                });
+                })
 
-                todoInput.value = "";
-            } else {
+                todoInput.value = "";//then value dalne ke bad hame input box ko empty bhi karna hai
+            }
+            else {
                 alert("PLEASE ENTER SOME TEXT");
             }
         }
 
-        document.getElementById("addButton").addEventListener('click', addTodoItem);
+        document.getElementById("addButton").addEventListener('click', addTodoItem);//is function ko call mat karna
 
+        //to delete all the added items
         document.getElementById("deleteAllButton").addEventListener('click', function () {
             let todoList = document.getElementById("todoList");
             todoList.innerHTML = "";
-        });
+        })
 
-        document.getElementById("todoInput").addEventListener("keypress", function (event) {
+        //keypress:- The keypress event is fired when a key that produces a character value is pressed down. 
+        document.getElementById("todoInput").addEventListener("keypress", function (event) {//ye function me event pass karna hota hai but ager nhi bhi karoge to bhi chalega
+            //aor yha even means konsa event hamne add kiya and then use access kiya using . operator
             if (event.key == "Enter") {
                 addTodoItem();
             }
-        });
+        })
     </script>
 </body>
+
 </html>
