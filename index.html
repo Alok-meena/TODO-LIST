@@ -167,7 +167,8 @@
                 })
 
                 //The dragover event is fired when an element or text selection is being dragged over a valid drop target 
-                listItem.addEventListener("dragover", function (e) {
+                listItem.addEventListener("dragover", function (e) {//yani jab kisi item ke uper se jayega tab 
+                    //browser hmara default hi work karna chahihe
                     e.preventDefault();
                 })
 
@@ -177,6 +178,8 @@
                     let draggingItem = document.querySelector(".dragging");
                     if (draggingItem !== listItem) {//dragging item is not equal to curent item then do this
                         todoList.insertBefore(draggingItem, listItem);//listItem.sibling hta diya bs
+                        //to kya hoga ki list me last me hmara current item hoga use koi bhi item uske uper (before) hi rhega
+                        //usse niche nhi usse uper khi bhi rh skta hai
                     }
                 })
 
